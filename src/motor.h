@@ -12,7 +12,7 @@ int in4=10;
 // pinMode(in4,OUTPUT);
 
 
-// when int3>in4,move font
+// when int3>in4,move back
 void setupMotor(){
   pinMode(in1,OUTPUT);
   pinMode(in2,OUTPUT);
@@ -20,20 +20,55 @@ void setupMotor(){
   pinMode(in4,OUTPUT);
 }
 
-void rightMotorMove(int out3,int out4){
+void leftMotorMove(int out3,int out4){
   analogWrite(in3, out3);
   analogWrite(in4, out4);
 
 }
 
-void rightMotorFont(int lv){
-rightMotorMove(lv,0);
+void leftMotorFont(int lv){
+leftMotorMove(0,lv);
 }
 
-void rightMotorBack(int lv){
+void leftMotorBack(int lv){
+  leftMotorMove(lv,0);
+}
+
+void leftMotorStop(){
+  leftMotorMove(0,0);
+}
+
+void rightMotorMove(int out1,int out2){
+  analogWrite(in1, out1);
+  analogWrite(in2, out2);
+
+}
+
+void rightMotorFont(int lv){
   rightMotorMove(0,lv);
 }
 
-void moveFont(int lv/*0-255*/){
+void rightMotorBack(int lv){
+  rightMotorMove(lv,0);
+}
 
+void rightMotorStop(){
+  rightMotorMove(0,0);
+}
+
+void motorFont(int lv/*0-255*/){
+  rightMotorFont(lv);
+  leftMotorFont(lv);
+
+}
+
+void motorBack(int lv/*0-255*/){
+  rightMotorBack(lv);
+  leftMotorBack(lv);
+
+}
+
+void motorStop(){
+  leftMotorStop();
+  rightMotorStop();
 }
