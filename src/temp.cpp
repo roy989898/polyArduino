@@ -69,38 +69,11 @@ int centerDistance=digitalRead(irDistancePin);
 // Serial.println(" cm");
 
 
-if(rightDistance<20&&leftDistance<20&&centerDistance==0){
-  // has a wall infornt of the car
-  hasWall=1;
-  int q=rand()%2;
-  if(q==0){
-    motorMoveRight(250);
+int leftPMW=map(rightDistance, 2, 100, 0, 255);
+int rightPMW=map(leftDistance, 2, 100, 0, 255);
 
-  }else{
-    motorMoveLeft(250);
-  }
-
-  delay(1500);
-
-
-}else{
-  hasWall=0;
-  if(rightDistance>0&&rightDistance>20&&centerDistance!=0){
-    // right side have nothing
-  leftMotorMoveFont(210);
-  }else{
-    leftMotorMoveBack(190);
-
-  }
-
-  if (leftDistance>0&&leftDistance>20&&centerDistance!=0) {
-    // left side have nothing
-    rightMotorMoveFont(210);
-  }else{
-    rightMotorMoveBack(190);
-  }
-
-}
+leftMotorMoveFont(leftPMW);
+rightMotorMoveFont(rightPMW);
 
 
 
