@@ -9,6 +9,7 @@
 #include "utSensor.h"
 #include "motor.h"
 #include "lightSensor.h"
+#include <stdlib.h>
 
 
 
@@ -22,6 +23,9 @@ int rightEchoPin=3;
 int leftTrigPin=8;
 int leftEchoPin=9;
 int irDistancePin=7;
+
+
+int hasWall=0;
 
 
 
@@ -65,20 +69,42 @@ int centerDistance=digitalRead(irDistancePin);
 // Serial.println(" cm");
 
 
-if(rightDistance>0&&rightDistance>20&&centerDistance!=0){
-  // right side have nothing
-leftMotorMoveFont(210);
+if(rightDistance<20&&leftDistance<20&&centerDistance==0){
+  // has a wall infornt of the car
+  hasWall=1;
+  int q=rand()%2;
+  if(q==0){
+    motorMoveRight(250);
+
+  }else{
+    motorMoveLeft(250);
+  }
+
+  delay(1500);
+
+
 }else{
-  leftMotorMoveBack(190);
+  hasWall=0;
+  if(rightDistance>0&&rightDistance>20&&centerDistance!=0){
+    // right side have nothing
+  leftMotorMoveFont(210);
+  }else{
+    leftMotorMoveBack(190);
+
+  }
+
+  if (leftDistance>0&&leftDistance>20&&centerDistance!=0) {
+    // left side have nothing
+    rightMotorMoveFont(210);
+  }else{
+    rightMotorMoveBack(190);
+  }
 
 }
 
-if (leftDistance>0&&leftDistance>20&&centerDistance!=0) {
-  // left side have nothing
-  rightMotorMoveFont(210);
-}else{
-  rightMotorMoveBack(190);
-}
+
+
+
 
 
 }
