@@ -24,6 +24,8 @@ int leftEchoPin=9;
 int irDistancePin=7;
 
 
+
+
 void setup()
 {
   pinMode(rightTrigPin, OUTPUT);
@@ -41,15 +43,15 @@ void setup()
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
+//   put your main code here, to run repeatedly:
 
-// int rightDistance=detectDistance(rightTrigPin,rightEchoPin);
-//
-// int leftDistance=detectDistance(leftTrigPin,leftEchoPin);
-//
-// int centerDistance=digitalRead(irDistancePin);
-// //  1 is need to avoid
-//
+int rightDistance=detectDistance(rightTrigPin,rightEchoPin);
+
+int leftDistance=detectDistance(leftTrigPin,leftEchoPin);
+
+int centerDistance=digitalRead(irDistancePin);
+//  0 is need to avoid
+
 // Serial.print("Right ");
 // Serial.print(rightDistance);
 // Serial.print(" cm");
@@ -62,13 +64,21 @@ void loop()
 // Serial.print(leftDistance);
 // Serial.println(" cm");
 
-motorMoveRight(255);
+
+if(rightDistance>0&&rightDistance>20&&centerDistance!=0){
+  // right side have nothing
+leftMotorMoveFont(210);
+}else{
+  leftMotorMoveBack(190);
+
+}
+
+if (leftDistance>0&&leftDistance>20&&centerDistance!=0) {
+  // left side have nothing
+  rightMotorMoveFont(210);
+}else{
+  rightMotorMoveBack(190);
+}
 
 
-delay(500);
-
-motorStop();
-
-
-delay(500);
 }
